@@ -1,0 +1,23 @@
+MACRO DEMO — PWA de simulación
+
+IMPORTANTE: No es una app oficial ni está afiliada a Banco Macro. Todos los datos son ficticios. No ingreses credenciales reales.
+
+CONTENIDO
+- index.html: aplicación completa.
+- manifest.json: configuración instalable.
+- sw.js: caché para uso sin conexión luego de la primera carga.
+- icons/icon.svg: icono de demostración.
+
+CÓMO INSTALAR EN ANDROID
+1. Para instalarla como PWA, los archivos deben estar publicados en un sitio HTTPS (por ejemplo, un hosting estático que controles).
+2. Abrí la dirección HTTPS en Chrome para Android.
+3. Menú ⋮ > Instalar aplicación o Añadir a pantalla principal.
+4. Abrila desde el icono. Tras la primera carga, el service worker permite usarla sin conexión.
+
+USO
+- En el inicio de sesión, escribí cualquier usuario y contraseña de prueba.
+- En Editar datos podés cambiar nombre, saldo y número ficticio de cuenta.
+- Agregá movimientos y aplicá filtros por fecha, tipo y descripción.
+- La información se guarda localmente en el navegador de ese dispositivo.
+
+Este paquete no es un APK. Es una aplicación web instalable (PWA); requiere HTTPS para que Chrome habilite la instalación y el modo sin conexión.

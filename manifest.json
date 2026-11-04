@@ -1,0 +1,17 @@
+{
+  "name": "Macro Demo · Simulador",
+  "short_name": "Macro Demo",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f3f6fa",
+  "theme_color": "#082b55",
+  "description": "Simulador bancario educativo con datos ficticios.",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

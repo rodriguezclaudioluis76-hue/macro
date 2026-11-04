@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#082b55">
+<meta name="description" content="Simulador bancario educativo con datos ficticios.">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<title>Macro Demo · Simulador</title>
+<style>
+:root{--navy:#082b55;--blue:#0d4d89;--orange:#f28b20;--ink:#14243a;--muted:#65758b;--line:#e5ebf2;--bg:#f3f6fa;--white:#fff;--green:#16865b;--red:#c34b4b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}.demo-bar{background:#fff3df;color:#754300;text-align:center;padding:8px 12px;font-size:12px;font-weight:800;letter-spacing:.04em;border-bottom:1px solid #f3d7ad}
+header{background:linear-gradient(120deg,var(--navy),var(--blue));color:white;padding:22px max(18px,calc((100% - 520px)/2)) 24px}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:12px}.brand strong{font-size:20px;letter-spacing:.2px}.badge{font-size:10px;border:1px solid #ffffff70;border-radius:30px;padding:5px 9px;font-weight:800;letter-spacing:.1em}
+.header-sub{opacity:.82;font-size:13px;margin-top:16px}.page{max-width:520px;margin:0 auto;padding:18px 16px 100px}.hidden{display:none!important}
+.card{background:white;border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 5px 18px #17365a0a}
+.label{color:var(--muted);font-size:12px;font-weight:650}.balance{font-size:32px;font-weight:800;letter-spacing:-1px;margin:8px 0}.small{font-size:12px;color:var(--muted)}.row{display:flex;align-items:center;justify-content:space-between;gap:12px}.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}.action{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 8px;text-align:center;color:var(--blue);font-size:12px;font-weight:750}.action span{display:block;font-size:22px;margin-bottom:7px}
+h2{font-size:18px;margin:4px 0 14px}h3{font-size:15px;margin:0 0 12px}.pill{border-radius:30px;background:#eaf2fb;color:var(--blue);padding:5px 9px;font-size:11px;font-weight:750}
+.tx{display:flex;align-items:center;gap:11px;padding:13px 0;border-bottom:1px solid var(--line)}.tx:last-child{border-bottom:0}.txicon{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:#edf3fa;font-size:17px}.txmain{flex:1;min-width:0}.txmain b{display:block;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.txmain small{color:var(--muted);font-size:11px}.amount{font-size:13px;font-weight:800;white-space:nowrap}.positive{color:var(--green)}.negative{color:var(--ink)}
+input,select{width:100%;border:1px solid #d9e1eb;border-radius:11px;padding:12px;background:white;color:var(--ink);margin:6px 0 12px;min-height:44px}label{display:block;font-size:12px;font-weight:700;color:#46566b}.btn{border:0;border-radius:12px;padding:13px 16px;background:var(--blue);color:white;font-weight:750;width:100%;min-height:46px}.btn.secondary{background:#eaf1f8;color:var(--blue)}.btn.orange{background:var(--orange);color:#271700}.btn.danger{background:#fff0f0;color:#a12c2c}.btnrow{display:flex;gap:9px}.btnrow>*{flex:1}.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:center;padding:8px 8px calc(8px + env(safe-area-inset-bottom));z-index:5}.navinner{width:min(520px,100%);display:grid;grid-template-columns:repeat(4,1fr);gap:4px}.nav button{border:0;background:transparent;color:#718096;font-size:10px;padding:7px 2px;border-radius:10px;font-weight:700}.nav button span{display:block;font-size:19px;margin-bottom:3px}.nav button.active{color:var(--blue);background:#edf4fb}
+.login-wrap{max-width:420px;margin:35px auto}.notice{font-size:11px;line-height:1.45;color:#78511c;background:#fff5e7;border-radius:10px;padding:10px;margin-top:12px}.mutedline{height:1px;background:var(--line);margin:14px 0}.filters{display:grid;grid-template-columns:1fr 1fr;gap:8px}.filters label{min-width:0}.filters .wide{grid-column:1/-1}.empty{text-align:center;color:var(--muted);padding:22px 8px;font-size:13px}.foot{text-align:center;color:#8290a1;font-size:10px;padding:14px}
+@media(min-width:600px){body{padding-bottom:0}.nav{position:static;background:transparent;border:0}.navinner{background:white;border:1px solid var(--line);border-radius:14px;padding:5px}.page{padding-bottom:24px}}
+</style>
+</head>
+<body>
+<div class="demo-bar">SIMULADOR DEMO · NO ES UNA APLICACIÓN OFICIAL DE NINGÚN BANCO</div>
+<header>
+ <div class="brand"><strong>macro<span style="color:#ffad43">·</span>demo</strong><span class="badge">DATOS FICTICIOS</span></div>
+ <div class="header-sub" id="headerSub">Banca digital de demostración</div>
+</header>
+
+<main class="page">
+<section id="login" class="login-wrap">
+ <div class="card">
+  <h2>Ingresá a tu simulador</h2>
+  <p class="small">Usá cualquier usuario y contraseña de prueba. No ingreses credenciales bancarias reales.</p>
+  <form id="loginForm">
+   <label for="loginUser">Usuario de prueba</label><input id="loginUser" autocomplete="off" placeholder="Por ejemplo: demo" required>
+   <label for="loginPass">Contraseña de prueba</label><input id="loginPass" type="password" placeholder="Cualquier clave" required>
+   <button class="btn" type="submit">Ingresar</button>
+  </form>
+  <div class="notice">Este acceso es local y ficticio. No valida identidad ni se conecta con Banco Macro.</div>
+ </div>
+</section>
+
+<section id="app" class="hidden">
+ <section id="homeView">
+  <div class="row" style="margin:3px 2px 12px"><div><div class="label">Hola,</div><b id="helloName">Usuario Demo</b></div><span class="pill">Cuenta sueldo DEMO</span></div>
+  <div class="card" style="background:linear-gradient(125deg,#082b55,#145b99);color:white;border:0">
+   <div class="row"><span style="font-size:12px;opacity:.8">SALDO DISPONIBLE · DEMO</span><span class="badge">ARS</span></div>
+   <div class="balance" id="homeBalance">$ 850.000,00</div>
+   <div class="row"><span style="font-size:12px;opacity:.8" id="homeAccount">Caja de ahorro · •••• 4821</span><span style="font-size:11px;opacity:.8">Simulado</span></div>
+  </div>
+  <div class="actions">
+   <button class="action" data-go="summary"><span>▤</span>Resumen</button>
+   <button class="action" data-go="movements"><span>⇄</span>Movimientos</button>
+   <button class="action" data-go="account"><span>＋</span>Cuenta sueldo</button>
+  </div>
+  <div class="card"><div class="row"><h3>Últimos movimientos</h3><button class="small" data-go="movements" style="border:0;background:none;color:var(--blue);font-weight:800">Ver todos</button></div><div id="recentList"></div></div>
+ </section>
+
+ <section id="summaryView" class="hidden">
+  <h2>Resumen de cuenta</h2>
+  <div class="card"><div class="label">Saldo disponible · ficticio</div><div class="balance" id="summaryBalance">$ 850.000,00</div><div class="mutedline"></div><div class="row"><span class="small">Tipo de cuenta</span><b style="font-size:13px">Caja de ahorro en pesos</b></div><div class="row" style="margin-top:12px"><span class="small">Número de cuenta</span><b id="summaryAccount" style="font-size:13px">000-123456/7</b></div><div class="row" style="margin-top:12px"><span class="small">CBU de prueba</span><b style="font-size:12px">0000000000000000000000</b></div></div>
+  <div class="card"><h3>Titular de demostración</h3><div id="summaryName" style="font-weight:750">Usuario Demo</div><div class="small">Identidad y datos no verificados · DEMO</div></div>
+ </section>
+
+ <section id="movementsView" class="hidden">
+  <h2>Movimientos</h2>
+  <div class="card">
+   <h3>Filtrar movimientos</h3>
+   <div class="filters">
+    <label>Desde<input type="date" id="fromDate"></label><label>Hasta<input type="date" id="toDate"></label>
+    <label>Tipo<select id="typeFilter"><option value="all">Todos</option><option value="in">Ingresos</option><option value="out">Egresos</option></select></label>
+    <label>Buscar<input id="searchFilter" placeholder="Descripción"></label>
+   </div>
+   <button class="btn secondary" id="clearFilters" type="button">Limpiar filtros</button>
+  </div>
+  <div class="card"><div class="row"><h3>Detalle de operaciones</h3><span class="pill" id="txCount">0 operaciones</span></div><div id="allList"></div></div>
+ </section>
+
+ <section id="accountView" class="hidden">
+  <h2>Cuenta sueldo</h2>
+  <div class="card"><span class="pill">SOLICITUD SIMULADA</span><h3 style="margin-top:12px">Abrir cuenta sueldo</h3><p class="small">Completá este formulario con datos inventados. No se abre una cuenta bancaria real.</p>
+   <form id="salaryForm">
+    <label>Nombre ficticio</label><input id="salaryName" placeholder="Nombre y apellido" required>
+    <label>Empresa ficticia</label><input id="salaryCompany" placeholder="Empresa de ejemplo" required>
+    <label>CUIL de prueba (opcional)</label><input id="salaryCuil" placeholder="No uses datos reales">
+    <button class="btn orange" type="submit">Simular solicitud</button>
+   </form><p id="salaryResult" class="small" aria-live="polite"></p>
+  </div>
+ </section>
+
+ <section id="adminView" class="hidden">
+  <h2>Administración DEMO</h2>
+  <div class="card"><h3>Datos ficticios de la cuenta</h3>
+   <label>Nombre mostrado</label><input id="editName">
+   <label>Saldo ficticio (ARS)</label><input id="editBalance" type="number" min="0" step="0.01">
+   <label>Número de cuenta ficticio</label><input id="editAccount">
+   <button class="btn" id="saveProfile" type="button">Guardar cambios</button>
+  </div>
+  <div class="card"><h3>Agregar movimiento ficticio</h3>
+   <form id="addTx">
+    <label>Descripción</label><input id="txDesc" placeholder="Ej. Compra de ejemplo" required>
+    <label>Importe (ARS)</label><input id="txAmount" type="number" min="0.01" step="0.01" required>
+    <label>Tipo</label><select id="txType"><option value="out">Egreso</option><option value="in">Ingreso</option></select>
+    <label>Fecha</label><input id="txDate" type="date" required>
+    <button class="btn orange" type="submit">Agregar movimiento</button>
+   </form>
+  </div>
+  <div class="card"><h3>Restablecer datos de ejemplo</h3><p class="small">Reemplaza los cambios locales por los datos ficticios iniciales.</p><button class="btn danger" id="resetData" type="button">Restablecer simulador</button></div>
+ </section>
+ <div class="foot">Macro Demo · Simulación educativa · No afiliada a Banco Macro</div>
+</section>
+</main>
+
+<nav id="nav" class="nav hidden" aria-label="Navegación principal"><div class="navinner">
+ <button class="active" data-view="home"><span>⌂</span>Inicio</button>
+ <button data-view="summary"><span>▤</span>Resumen</button>
+ <button data-view="movements"><span>⇄</span>Movimientos</button>
+ <button data-view="admin"><span>⚙</span>Editar datos</button>
+</div></nav>
+<script>
+const KEY='macroDemoPwaDataV1';
+const initial=()=>({name:'Usuario Demo',balance:850000,account:'000-123456/7',transactions:[
+{id:1,desc:'Acreditación sueldo (DEMO)',amount:850000,type:'in',date:'2026-10-31'},
+{id:2,desc:'Compra supermercado (DEMO)',amount:42850.50,type:'out',date:'2026-11-02'},
+{id:3,desc:'Servicio de telefonía (DEMO)',amount:12999,type:'out',date:'2026-11-03'},
+{id:4,desc:'Reintegro de ejemplo',amount:5500,type:'in',date:'2026-11-04'}]});
+let data;
+try{data=JSON.parse(localStorage.getItem(KEY))||initial()}catch(e){data=initial()}
+const $=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat('es-AR',{style:'currency',currency:'ARS'}).format(Number(n)||0);
+const dateFmt=s=>{const [y,m,d]=s.split('-');return `${d}/${m}/${y}`};
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
+function txHTML(t){return `<div class="tx"><div class="txicon">${t.type==='in'?'↙':'↗'}</div><div class="txmain"><b>${escapeHTML(t.desc)}</b><small>${dateFmt(t.date)} · ${t.type==='in'?'Ingreso':'Egreso'} DEMO</small></div><div class="amount ${t.type==='in'?'positive':'negative'}">${t.type==='in'?'+':'−'} ${money(t.amount)}</div></div>`}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function render(){
+ $('helloName').textContent=data.name;$('homeBalance').textContent=money(data.balance);$('summaryBalance').textContent=money(data.balance);
+ $('homeAccount').textContent='Caja de ahorro · '+data.account.slice(-4).padStart(4,'•');$('summaryAccount').textContent=data.account;$('summaryName').textContent=data.name;
+ $('recentList').innerHTML=[...data.transactions].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,3).map(txHTML).join('')||'<div class="empty">Todavía no hay movimientos.</div>';
+ const from=$('fromDate').value,to=$('toDate').value,type=$('typeFilter').value,q=$('searchFilter').value.toLowerCase();
+ const filtered=[...data.transactions].filter(t=>(!from||t.date>=from)&&(!to||t.date<=to)&&(type==='all'||t.type===type)&&t.desc.toLowerCase().includes(q)).sort((a,b)=>b.date.localeCompare(a.date));
+ $('allList').innerHTML=filtered.map(txHTML).join('')||'<div class="empty">No hay movimientos que coincidan con los filtros.</div>';
+ $('txCount').textContent=`${filtered.length} operaciones`;
+ $('editName').value=data.name;$('editBalance').value=data.balance;$('editAccount').value=data.account;
+}
+function show(view){['home','summary','movements','account','admin'].forEach(v=>$(v+'View').classList.toggle('hidden',v!==view));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.view===view));}
+$('loginForm').addEventListener('submit',e=>{e.preventDefault();$('login').classList.add('hidden');$('app').classList.remove('hidden');$('nav').classList.remove('hidden');$('headerSub').textContent='Hola, '+$('loginUser').value+' · Entorno ficticio';show('home');render()});
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.view)));
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.go)));
+['fromDate','toDate','typeFilter','searchFilter'].forEach(id=>$(id).addEventListener('input',render));
+$('clearFilters').addEventListener('click',()=>{['fromDate','toDate','searchFilter'].forEach(id=>$(id).value='');$('typeFilter').value='all';render()});
+$('saveProfile').addEventListener('click',()=>{const bal=Number($('editBalance').value);if(!Number.isFinite(bal)||bal<0){alert('Ingresá un saldo válido.');return}data.name=$('editName').value.trim()||'Usuario Demo';data.balance=bal;data.account=$('editAccount').value.trim()||'000-123456/7';save();alert('Datos ficticios guardados en este dispositivo.')});
+$('addTx').addEventListener('submit',e=>{e.preventDefault();const amount=Number($('txAmount').value);if(!Number.isFinite(amount)||amount<=0){alert('El importe debe ser mayor que cero.');return}data.transactions.push({id:Date.now(),desc:$('txDesc').value.trim(),amount,type:$('txType').value,date:$('txDate').value});save();e.target.reset();$('txDate').value=new Date().toISOString().slice(0,10);alert('Movimiento ficticio agregado.')});
+$('salaryForm').addEventListener('submit',e=>{e.preventDefault();$('salaryResult').textContent='Solicitud DEMO recibida para '+$('salaryName').value+' en '+$('salaryCompany').value+'. No se creó ninguna cuenta real.'});
+$('resetData').addEventListener('click',()=>{if(confirm('¿Restablecer todos los datos ficticios?')){data=initial();save();alert('Simulador restablecido.')}});
+$('txDate').value=new Date().toISOString().slice(0,10);
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script>
+</body></html>

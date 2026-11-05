@@ -1,23 +1,20 @@
-MACRO DEMO — PWA de simulación
+MACRO DEMO 2.0 — PWA instalable
 
-IMPORTANTE: No es una app oficial ni está afiliada a Banco Macro. Todos los datos son ficticios. No ingreses credenciales reales.
+Esta es una aplicación web progresiva (PWA), no un APK. Es un simulador independiente, no afiliado a Banco Macro. La identificación DEMO permanece visible. Todos los datos son ficticios; no ingreses credenciales ni datos bancarios reales.
 
-CONTENIDO
-- index.html: aplicación completa.
-- manifest.json: configuración instalable.
-- sw.js: caché para uso sin conexión luego de la primera carga.
-- icons/icon.svg: icono de demostración.
+PUBLICACIÓN EN GITHUB PAGES
+1. Extraé el ZIP.
+2. En tu repositorio GitHub, usá Add file > Upload files.
+3. Subí el contenido completo, incluyendo index.html, manifest.json, sw.js y la carpeta icons. Reemplazá los archivos anteriores cuando GitHub lo solicite.
+4. Confirmá con Commit changes.
+5. En Settings > Pages verificá Branch main y carpeta /(root).
+6. Esperá a que termine el despliegue y abrí la dirección HTTPS del repositorio.
+7. En Chrome Android: menú ⋮ > Instalar aplicación o Añadir a pantalla principal.
 
-CÓMO INSTALAR EN ANDROID
-1. Para instalarla como PWA, los archivos deben estar publicados en un sitio HTTPS (por ejemplo, un hosting estático que controles).
-2. Abrí la dirección HTTPS en Chrome para Android.
-3. Menú ⋮ > Instalar aplicación o Añadir a pantalla principal.
-4. Abrila desde el icono. Tras la primera carga, el service worker permite usarla sin conexión.
-
-USO
-- En el inicio de sesión, escribí cualquier usuario y contraseña de prueba.
-- En Editar datos podés cambiar nombre, saldo y número ficticio de cuenta.
-- Agregá movimientos y aplicá filtros por fecha, tipo y descripción.
-- La información se guarda localmente en el navegador de ese dispositivo.
-
-Este paquete no es un APK. Es una aplicación web instalable (PWA); requiere HTTPS para que Chrome habilite la instalación y el modo sin conexión.
+FUNCIONES
+- Acceso local con cualquier usuario y clave de prueba.
+- Inicio, resumen, cuenta sueldo simulada y movimientos.
+- Filtros por fechas, tipo y texto.
+- Edición de titular, saldo y número ficticio de cuenta.
+- Alta de movimientos ficticios y guardado local en el navegador.
+- Caché para uso sin conexión después de la primera visita HTTPS.
